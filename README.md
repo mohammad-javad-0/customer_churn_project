@@ -1,180 +1,161 @@
-# ```markdown
+# Customer Churn Prediction Project
 
-# \# Telco Customer Churn Prediction
+Predicting customer churn using Machine Learning techniques on the Telco Customer Churn dataset.
 
-# 
+## Project Overview
 
-# This repository contains an end-to-end Machine Learning project aimed at predicting customer churn for a telecommunications company. By analyzing customer behavior and demographics, the goal is to identify individuals at a high risk of churning, enabling proactive retention strategies.
+Customer churn is one of the most important challenges for subscription-based businesses. In this project, we analyze customer behavior and build machine learning models to predict whether a customer is likely to leave the service.
 
-# 
+The project includes:
 
-# The dataset used in this project was sourced from \*\*Kaggle\*\* (\[Telco Customer Churn Dataset](https://www.kaggle.com/datasets/blaiseabatcha/telco-customer-churn-csv)).
+* Data Cleaning & Preprocessing
+* Exploratory Data Analysis (EDA)
+* Feature Engineering
+* Model Training & Evaluation
+* Hyperparameter Tuning
+* Final Model Selection
 
-# 
+---
 
-# \## Project Structure
+## Repository Structure
 
-# 
+```text
+customer_churn_project/
+│
+├── Telco-Customer-Churn.csv      # Dataset
+├── eda.ipynb                     # Exploratory Data Analysis
+├── training.ipynb                # Model Training & Evaluation
+├── README.md
+```
 
-# ```text
+---
 
-# ├── data/
+## Dataset
 
-# │   └── Telco-Customer-Churn.csv   # Dataset from Kaggle
+Dataset: Telco Customer Churn
 
-# ├── model/
+The dataset contains customer demographic information, account details, subscribed services, and churn status.
 
-# │   └── final\_model.pkl            # Trained and serialized final pipeline
+### Target Variable
 
-# ├── eda.ipynb                      # Exploratory Data Analysis \& Visualization
+* **Churn**
 
-# ├── training.ipynb                 # Preprocessing, Model Training \& Selection
+  * Yes → Customer left the company
+  * No → Customer stayed
 
-# └── README.md                      # Project Documentation
+### Example Features
 
-# 
+* Gender
+* SeniorCitizen
+* Partner
+* Dependents
+* Tenure
+* InternetService
+* Contract
+* PaymentMethod
+* MonthlyCharges
+* TotalCharges
 
-# ```
+---
 
-# 
+## Exploratory Data Analysis
 
-# \## Data \& Feature Overview
+The EDA notebook includes:
 
-# 
+* Missing value analysis
+* Data type inspection
+* Target distribution analysis
+* Customer behavior exploration
+* Numerical feature analysis
+* Categorical feature analysis
+* Correlation and business insights
 
-# The dataset contains \*\*7,032 entries\*\* with 20 features covering:
+---
 
-# 
+## Data Preprocessing
 
-# \* \*\*Demographics:\*\* Gender, Senior Citizen status, Partner, Dependents.
+The preprocessing pipeline includes:
 
-# \* \*\*Customer Account Info:\*\* Tenure (months with the company), Contract type, Paperless Billing, Payment Method, Monthly Charges, Total Charges.
+* Handling missing values
+* One-Hot Encoding for categorical features
+* Feature scaling for numerical features
+* Train/Test split
+* Pipeline-based workflow using Scikit-Learn
 
-# \* \*\*Services Signed Up For:\*\* Phone Service, Multiple Lines, Internet Service (DSL/Fiber optic), Online Security, Online Backup, Device Protection, Tech Support, Streaming TV, Streaming Movies.
+---
 
-# \* \*\*Target:\*\* `Churn` (Yes/No) indicating whether the customer left within the last month.
+## Models Evaluated
 
-# 
+Several classification algorithms were trained and compared:
 
-# \## Exploratory Data Analysis (EDA) Highlights
+* Logistic Regression
+* Support Vector Machine (SVC)
+* Random Forest
+* AdaBoost
+* Gradient Boosting
 
-# 
+Hyperparameter tuning was performed using **GridSearchCV** with cross-validation.
 
-# Key insights discovered during EDA (`eda.ipynb`):
+---
 
-# 
+## Evaluation Metrics
 
-# \* \*\*Class Imbalance:\*\* The target variable `Churn` is imbalanced, with roughly 73.4% "No" and 26.6% "Yes" observations.
+Models were evaluated using:
 
-# \* \*\*Tenure Influence:\*\* Customers with shorter tenures exhibit a significantly higher churn rate, heavily concentrated in the first few months of service.
+* F1 Score
+* Classification Report
+* Confusion Matrix
+* Cross-Validation Performance
 
-# \* \*\*Charges vs. Churn:\*\* Higher monthly charges generally correlate with an increased likelihood of churn, especially among customers using Fiber Optic internet services.
+The final selected model was chosen based on predictive performance and generalization ability.
 
-# 
+---
 
-# \##text Preprocessing \& Feature Engineering
+## Technologies Used
 
-# Before training the predictive models, the following pipeline was built (`training.ipynb`):
+* Python
+* Pandas
+* NumPy
+* Matplotlib
+* Scikit-Learn
+* Jupyter Notebook
 
-# 
+---
 
-# 1\. \*\*Index Assignment:\*\* Set `customerID` as the DataFrame index since it represents unique records.
+## How to Run
 
-# 2\. \*\*Categorical Encoding:\*\* Applied `OneHotEncoder(handle\_unknown='ignore')` to convert all categorical attributes into numerical formats.
+### 1. Clone the repository
 
-# 3\. \*\*Feature Scaling:\*\* Implemented `StandardScaler()` specifically for models requiring feature scaling (e.g., Logistic Regression, Support Vector Classifiers).
+```bash
+git clone https://github.com/mohammad-javad-0/customer_churn_project.git
+cd customer_churn_project
+```
 
-# 4\. \*\*Handling Imbalance:\*\* Integrated `class\_weight='balanced'` within the classification algorithms to counter the negative effects of class imbalance.
+### 2. Install dependencies
 
-# 
+```bash
+pip install -r requirements.txt
+```
 
-# \## Model Evaluation \& Hyperparameter Tuning
+Or install manually:
 
-# 
+```bash
+pip install pandas numpy matplotlib scikit-learn
+```
 
-# We evaluated multiple foundational and ensemble classification algorithms using a 5-fold `StratifiedKFold` cross-validation scheme over a grid search parameter sweep (`GridSearchCV`):
+### 3. Run notebooks
 
-# 
+```bash
+jupyter notebook
+```
 
-# \* Logistic Regression (with SAGA solver)
+Open:
 
-# \* Support Vector Classifier (SVC)
+* `eda.ipynb`
+* `training.ipynb`
 
-# \* Random Forest Classifier
+---
 
-# \* AdaBoost Classifier
+## Project Goal
 
-# \* Gradient Boosting Classifier
-
-# 
-
-# \### Final Selected Model
-
-# 
-
-# The \*\*Logistic Regression\*\* pipeline configured with balanced class weights, scaled input distributions, and tuned regularization bounds was chosen as the production architecture. It effectively balances sensitivity (recall) for predicting actual churn instances while mitigating high false-alarm rates.
-
-# 
-
-# The optimized end-to-end configuration was packaged via `sklearn.compose.ColumnTransformer` and serialized using `joblib` into `model/final\_model.pkl` for immediate inference deployment.
-
-# 
-
-# \## Getting Started
-
-# 
-
-# \### Prerequisites
-
-# 
-
-# Make sure you have the following libraries installed:
-
-# 
-
-# ```bash
-
-# pip install numpy pandas matplotlib seaborn scikit-learn joblib
-
-# 
-
-# ```
-
-# 
-
-# \### Running the Notebooks
-
-# 
-
-# 1\. Clone this repository:
-
-# ```bash
-
-# git clone \[https://github.com/mohammad-javad-0/customer\_churn\_project.git](https://github.com/mohammad-javad-0/customer\_churn\_project.git)
-
-# cd customer\_churn\_project
-
-# 
-
-# ```
-
-# 
-
-# 
-
-# 2\. Explore data insights by opening `eda.ipynb`.
-
-# 3\. Re-train or inspect the ML workflows through `training.ipynb`.
-
-# 
-
-# \## License
-
-# 
-
-# This project is open-source and available under the MIT License.
-
-# 
-
-# ```
-
+The main objective of this project is to identify customers who are at risk of churn and provide a machine learning solution that can support customer retention strategies.
